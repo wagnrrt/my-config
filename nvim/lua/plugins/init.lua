@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    event = 'BufWritePre',
+    event = "BufWritePre",
     opts = require "configs.conform",
   },
 
@@ -19,10 +19,13 @@ return {
     event = "VeryLazy",
     opts = {
       ensure_installed = {
-        "vim", "lua", "vimdoc",
-        "html", "css", "cpp",
-        "c", "javascript", "typescript",
-        "tsx", "json", "luadoc", "kotlin",
+        "lua",
+        "html",
+        "cpp",
+        "c",
+        "javascript",
+        "typescript",
+        "json",
       },
     },
   },
@@ -30,7 +33,7 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     opts = function()
-      return require("configs.nvimtree")
+      return require "configs.nvimtree"
     end,
   },
 
@@ -42,37 +45,53 @@ return {
   },
 
   {
-    "mslvx/obscure.nvim",
+    "obsidian-nvim/obsidian.nvim",
     lazy = false,
-    priority = 1000,
-    opts = {},
-  },
-  {
-    "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
+
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+
     config = function()
-      require("nvim-ts-autotag").setup({
-        opts = {
-          enable_close = true,           -- Fecha tags automaticamente
-          enable_rename = true,          -- Renomeia tag de abertura/fechamento
-          enable_close_on_slash = false, -- Não fecha ao digitar </
+      require("obsidian").setup {
+        legacy_commands = false,
+
+        workspaces = {
+          {
+            name = "personal",
+            path = "~/vaults/personal",
+          },
         },
-      })
+      }
     end,
   },
   {
-    "mistweaverco/kulala.nvim",
-    keys = {
-      { "<leader>cs", desc = "Send request" }, -- c = curl / client
-      { "<leader>ca", desc = "Send all requests" },
-      { "<leader>cb", desc = "Open scratchpad" },
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = "markdown",
+  },
+
+  {
+    "rest-nvim/rest.nvim",
+    ft = { "http" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
     },
-    ft = { "http", "rest" },
-    opts = {
-      env_files = { "http-client.env" },
-      global_keymaps = true,
-      global_keymaps_prefix = "<leader>c", -- prefixo seguro
-      kulala_keymaps_prefix = "",
+    config = true,
+  },
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    dependencies = {
+      "tpope/vim-dadbod",
+      "kristijanhusak/vim-dadbod-completion",
     },
+    cmd = {
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
+    },
+    init = function()
+      vim.g.db_ui_use_nerd_fonts = 1
+    end,
   },
 }

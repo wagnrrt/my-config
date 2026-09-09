@@ -38,7 +38,7 @@
     normal-foreground:           var(foreground);
     alternate-urgent-foreground: var(red);
     selected-normal-background:  var(lightbg);
-    font:                        "JetBrains Mono 10";
+    font:                        "JetBrainsMono Nerd Font 10";
     blackText:			 rgba(0, 0, 0, 100 %);
 }
 window {
